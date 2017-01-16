@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<div id='app'>
+		<!-- <input v-model='text' id='input' />
+		{{text}} -->
+		<input id='a' type='text'/>
+		<span id='b'></span>
+	</div>
+
+	<input id='aa' type='text'/>
+	<span id='bb'></span>
+	<script type="text/javascript">
+		//最简单的模拟双向绑定
+		var obj = {};
+		Object.defineProperty(obj,'hello',{
+			
+			set:function(value){
+				document.getElementById('a').value = value;
+				document.getElementById('b').innerHTML = value;
+			}
+		})
+		document.addEventListener('keyup',function(e){
+			obj.hello = e.target.value;
+			console.log(e,e.target)
+		})
+
+		//模拟vuejs双向绑定
+		//var dom = nodeToFragment(document.getElementById('#app'));
+		//劫持DOM
+		function nodeToFragment(node){
+			var flag = document.createDocumentFragment();
+			var child;
+			while(child = node.firstChild){
+				flag.appendChild(child);
+			}
+			return flag;
+		}
+		var pp = document.getElementById('app');
+		/*console.log(nodeToFragment(pp));*/
+
+
+		var app = document.getElementById('app');
+		var dom = document.createElement('div');
+		var c;
+		c = app.firstChild;
+		dom.appendChild(app.firstChild);
+		dom.appendChild(app.firstChild);
+		dom.appendChild(app.firstChild);
+		dom.appendChild(app.firstChild);
+		dom.appendChild(app.firstChild);
+		dom.appendChild(app.firstChild);
+		
+		
+		console.log(app)
+
+
+	</script>
+</body>
+</html>

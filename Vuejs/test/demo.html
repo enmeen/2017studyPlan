@@ -22,8 +22,8 @@
     </div>
     <div id="app-4">
         <ol>
-            <li v-for="todo in todos">
-                {{ todo.text }}
+            <li v-for="v in todos">
+                {{ v.text }}
             </li>
         </ol>
     </div>
@@ -44,6 +44,11 @@
             <todo-item v-for="item in groceryList" v-bind:todo="item"></todo-item>
         </ol>
     </div>
+
+    <!-- 组件系统 -->
+    <div id="app-8"  v-on:click="event"><todo-it></todo-it></div>
+    
+
     <script src="https://unpkg.com/vue/dist/vue.js"></script>
     <script src="js.js"></script>
 </body>

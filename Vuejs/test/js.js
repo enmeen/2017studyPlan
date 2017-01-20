@@ -64,3 +64,18 @@ var app7 = new Vue({
     ]
   }
 })
+
+
+/*组件系统*/
+Vue.component('todo-it',{
+  template:'<p>i am a component</p>'
+});
+
+var com = new Vue({
+  el:'#app-8',
+  methods:{
+    event:function(){
+      alert(1)
+    }
+  }
+})

@@ -6,17 +6,15 @@
 </head>
 <body>
 	<div id='app'>
-		<!-- <input v-model='text' id='input' />
-		{{text}} -->
-		<input id='a' type='text'/>
-		<span id='b'></span>
+		<input v-model='tex' id='input' />
+		{{tex}} 
 	</div>
 
-	<input id='aa' type='text'/>
-	<span id='bb'></span>
+	<!-- <input id='aa' type='text'/>
+	<span id='bb'></span> -->
 	<script type="text/javascript">
 		//最简单的模拟双向绑定
-		var obj = {};
+		/*var obj = {};
 		Object.defineProperty(obj,'hello',{
 			
 			set:function(value){
@@ -27,37 +25,122 @@
 		document.addEventListener('keyup',function(e){
 			obj.hello = e.target.value;
 			console.log(e,e.target)
-		})
+		})*/
+
+		//响应式数据绑定
+		//obj对象绑定key方法
+		function def(obj,key,val){
+			var dep = new Dep();
+			Object.defineProperty(obj,key,{
+				get:function(){
+					//将订阅者，添加到主题对象
+					//执行Dep.target = this; Dep.target后即为 new Watcher
+					if(Dep.target) dep.addSub(Dep.target);
+					return val
+				},
+				set:function(newVal){
+					if(newVal === val) return;
+					val = newVal;
+					dep.notify();
+				}
+			})
+		}
+		function observe(obj,vm){
+			Object.keys(obj).forEach(function(key){
+				def(vm,key,obj[key]);
+			})
+		}
 
 		//模拟vuejs双向绑定
-		//var dom = nodeToFragment(document.getElementById('#app'));
+		
 		//劫持DOM
-		function nodeToFragment(node){
+		function nodeToFragment(node,vm){
 			var flag = document.createDocumentFragment();
 			var child;
 			while(child = node.firstChild){
+				compile(child,vm)
 				flag.appendChild(child);
 			}
 			return flag;
 		}
-		var pp = document.getElementById('app');
-		/*console.log(nodeToFragment(pp));*/
 
-
-		var app = document.getElementById('app');
-		var dom = document.createElement('div');
-		var c;
-		c = app.firstChild;
-		dom.appendChild(app.firstChild);
-		dom.appendChild(app.firstChild);
-		dom.appendChild(app.firstChild);
-		dom.appendChild(app.firstChild);
-		dom.appendChild(app.firstChild);
-		dom.appendChild(app.firstChild);
 		
-		
-		console.log(app)
+		//替换内容
+		function compile(node,vm){
+			var reg = /\{\{(.*)\}\}/; //获取dom中的{{}}中的内容
+			//节点类型为元素
+			if(node.nodeType === 1){
+				var attr = node.attributes;
+				for(var i = 0;i<attr.length;i++){
+					if(attr[i].nodeName == 'v-model'){
+						var name = attr[i].nodeValue;
+						node.addEventListener('input',function(e){
+							vm[name] = e.target.value; //将value及时更新为当前输入值。
+						})
+						node.value = vm[name]; //将vm  data中的name值赋值给node 该node为 input，调用Object 的set方法
+						node.removeAttribute('v-model');
+					}
+					
+				}
+			}
+			if(node.nodeType === 3){ //获取text节点,取出 {{.*}} 部分
+				
+				if(reg.test(node.nodeValue)){
+					var name = node.nodeValue.match(reg)[1];		
+					//node.nodeValue = vm[name]; // 赋值给{{.*}}部分
+					new Watcher(vm,node,name);
+				}
+			}
+		}
 
+		function Vue(options){
+			this.data = options.data;
+			var data = this.data;
+			observe(data,this);//注册对应的属性方法
+			var id = options.el;
+			var dom = nodeToFragment(document.getElementById(id),this);
+			//编译完成后，将dom返回到app中
+			document.getElementById(id).appendChild(dom);
+		}
+
+		function Watcher(vm,node,name){
+			Dep.target = this;
+			this.name = name;
+			this.node = node;
+			this.vm = vm;
+			console.log(this);
+			this.update();
+			Dep.target = null;
+
+		}
+		Watcher.prototype = {
+			update:function(){
+				this.get();
+				this.node.nodeValue = this.value;
+			},
+			get:function(){
+				this.value = this.vm[this.name];
+			}
+		}
+		function Dep(){
+			this.subs = [];
+		}
+		Dep.prototype = {
+			addSub:function(sub){
+				this.subs.push(sub);
+			},
+			notify:function(){
+				this.subs.forEach(function(sub){
+					sub.update();
+				})
+			}
+		}
+		var vm = new Vue({
+			el:'app',
+			data:{
+				tex :'hello world'
+			}
+		});
 
 	</script>
 </body>

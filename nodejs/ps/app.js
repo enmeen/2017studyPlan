@@ -106,8 +106,8 @@ function downImg(imgurl) {
 	}
 }
 
-var pagemax = 10;		// 获取到多少页的内容
-var startindex = 10;		// 从多少页开始获取
+var pagemax = 5;		// 获取到多少页的内容
+var startindex = 0;		// 从多少页开始获取
 
 function start(){
 	console.log("开始获取图片连接");

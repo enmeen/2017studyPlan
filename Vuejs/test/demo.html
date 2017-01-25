@@ -13,8 +13,8 @@
     </div>
     <div id="app-2">
         <span v-bind:title="message">
-   			 Hover your mouse over me for a few seconds to see my dynamically bound title!
-  		</span>
+             Hover your mouse over me for a few seconds to see my dynamically bound title!
+        </span>
     </div>
     <!-- 条件与循环 -->
     <div id="app-3">
@@ -44,13 +44,38 @@
             <todo-item v-for="item in groceryList" v-bind:todo="item"></todo-item>
         </ol>
     </div>
-
     <!-- 组件系统 -->
-    <div id="app-8"  v-on:click="event"><todo-it></todo-it></div>
-    
-
+    <div id="app-8" v-on:click="event">
+        <todo-it></todo-it>
+    </div>
+    <!-- 局部注册 -->
+    <div id='app-9'>
+        <com-demo></com-demo>
+    </div>
+    <!-- DOM作为模版 -->
+    <table id='app-10'>
+        <tr is='div-demo'>nihao1</tr>
+    </table>
+    <div id="app-11"></div>
+    <!-- 动态props -->
+    <div id="app-12">
+        <input v-model="parent">
+        <br>
+        <child-d :my-message="parent"></child-d>
+    </div>
+    <!-- 自定义事件 -->
+    <div id="counter-event-example">
+        <p>{{ total }}</p>
+        <button-counter v-on:increment="incrementTotal"></button-counter>
+        <button-counter v-on:increment="incrementTotal"></button-counter>
+    </div>
+    <!-- 内容分发 -->
+    <div id="slot">
+        <h1>父元素标题</h1>
+        <slot-demo>haha</slot-demo>
+    </div>
     <script src="https://unpkg.com/vue/dist/vue.js"></script>
-    <script src="js.js"></script>
+        <script src="js.js"></script>
 </body>
 
 </html>

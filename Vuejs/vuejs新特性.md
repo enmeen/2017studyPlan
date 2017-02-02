@@ -129,7 +129,7 @@ new Vue({
 })
 ```
 
-**-局部注册**
+**局部注册**
 
 ```javascript
 var Child = {
@@ -251,7 +251,7 @@ data: function () {
   ```
 - camelCase vs. kebab-case
 
-  HTML 特性不区分大小写。当使用非字符串模版时，prop的名字形式会从 camelCase 转为 kebab-		case（短横线隔开）
+  HTML 特性不区分大小写。当使用非字符串模版时，prop的名字形式会从 camelCase 转为 kebab-case（短横线隔开）
 
   ```javascript
   Vue.component('child', {

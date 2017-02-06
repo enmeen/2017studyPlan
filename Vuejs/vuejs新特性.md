@@ -1,6 +1,8 @@
-###  vuejs的基本方法
+###  vuejs
 
-#### 1. 声明式渲染
+#### 1. 介绍
+
+**声明式渲染**
 
 ```html
 <div id='app-1'>
@@ -38,7 +40,7 @@ var app2 = new Vue({
 
 
 
-#### 2. 条件与循环
+**条件与循环**
 
 **条件**
 
@@ -86,7 +88,7 @@ var app4 = new Vue({
 
 在控制台里，输入 `app4.todos.push({ text: 'New item' })`。你会发现列表中多了一栏新内容。
 
-#### 3. 处理用户输入
+**处理用户输入**
 
 用 `v-on` 指令绑定一个监听事件用于调用我们 Vue 实例中定义的方法：
 
@@ -111,7 +113,136 @@ var app5 = new Vue({
 })
 ```
 
-#### 4. 组件系统
+#### 2. Vue实例
+
+实例通过构造函数Vue创建一个Vue的根实例启动。
+
+**属性与方法**
+
+每个实例都会代理其data对象里所有的属性。
+
+**note**：代理的属性是响应的。只有在实例创建前添加才有效。
+
+处理data属性，Vue实例暴露了一些有用的方法，方法前添加前缀$。
+
+**生命周期**
+
+
+
+#### 3. 模版语法
+
+在底层的实现上， Vue 将模板编译成虚拟 DOM 渲染函数。结合响应系统，在应用状态改变时， Vue 能够智能地计算出重新渲染组件的最小代价并应用到 DOM 操作上。
+
+- **属性**
+
+{{}}的写法不能在HTML属性中使用，应使用v-bind指令:
+
+```html
+<div v-bind:id='iamId'></div>
+```
+
+- **在模版中支持使用js表达式**
+
+<u>注意区分表达式和语句的区别</u>
+
+```html
+{{ number + 1 }}
+{{ ok ? 'YES' : 'NO' }}
+{{ message.split('').reverse().join('') }}
+<div v-bind:id="'list-' + id"></div>
+```
+
+
+
+- **指令**
+
+指带有`v-`前缀的特殊属性。其职责是当表达式的值改变时相应地将某些行为应用到DOM上。
+
+- **参数**
+
+一些指令接收一个参数，指令后以冒号说明
+
+```html
+<a v-bind:href="url"></a>
+//上面的href是参数，告知v-bind指令将href属性与表达式url的绑定
+```
+
+- **修饰符**
+
+  ```html
+  <form v-on:submit.prevent="onSubmit"></form>
+  // .prevent 就是修饰符
+  ```
+
+
+- **过滤器**
+
+
+- **缩写**
+
+#### 4. 计算属性
+
+- **为什么会有计算属性**
+
+  直接在模版中写入的话会让模版变的过重和难以维护。
+
+  ```html
+  <div id="example">
+    {{ message.split('').reverse().join('') }}
+  </div>
+  ```
+
+  所以出现了*计算属性*
+
+  ```html
+  <div id="example">
+    <p>Original message: "{{ message }}"</p>
+    <p>Computed reversed message: "{{ reversedMessage }}"</p>
+  </div>
+  ```
+
+  ```javascript
+  var vm = new Vue({
+    el: '#example',
+    data: {
+      message: 'Hello'
+    },
+    computed: {
+      // a computed getter
+      reversedMessage: function () {
+        // `this` points to the vm instance
+        return this.message.split('').reverse().join('')
+      }
+    }
+  })
+  ```
+
+  上面案例代码中，我们声明了一个计算属性`reversedMessage`。
+
+- **计算缓存 vs Methods**
+
+  其实实现上面案例中的渲染可以通过method来达到同样的效果。
+
+  ```html
+  <p>Reversed message: "{{ reverseMessage() }}"</p>
+  ```
+
+  ```javascript
+  // in component
+  methods: {
+    reverseMessage: function () {
+      return this.message.split('').reverse().join('')
+    }
+  }
+  ```
+
+  对于结果，两种方式确实相同，但是**计算属性是基于它的依赖缓存**。即只要`message `不发生改变，直接返回之前的计算结果。
+
+  而method调用总会执行函**数。**
+
+- **计算属性 vs Watched Property**
+
+#### 5. 组件系统
 
 组件系统是vuejs的另一个重要概念，因为它提供了一种抽象，让我们可以用独立可复用的小组件来构建大型应用。
 
@@ -464,6 +595,8 @@ data: function () {
   </footer>
 </div>
 ```
+
+
 
 
 

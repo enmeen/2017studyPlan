@@ -7,5 +7,9 @@ export default {
 	},
 	save(items){
 		window.localStorage.setItem(VUE_STORE,JSON.stringify(items))
+	},
+	clear(){
+		window.localStorage.setItem(VUE_STORE,'[]')
 	}
 }
+

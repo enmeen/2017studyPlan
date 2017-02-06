@@ -109,8 +109,10 @@ var com = new Vue({
 //
 Vue.component('com-one', {
   template: '<span>{{ message }}</span>',
-  data: {
-    message: 'hello'
+  data: function() {
+    return {
+      message: 'hello'
+    }
   }
 })
 new Vue({
@@ -125,35 +127,35 @@ Vue.component('child-d', {
   template: '<span>{{ myMessage }}</span>'
 })
 new Vue({
-  el: "#app-12",
-  data:function(){
-    return {
-      parent:'nihaop1'
+    el: "#app-12",
+    data: function() {
+      return {
+        parent: 'nihaop1'
+      }
     }
-  }
-})
-/*自定义事件*/
-Vue.component('button-counter',{
-  template:'<button v-on:click="increment">{{counter}}</button>',
-  data:function(){
+  })
+  /*自定义事件*/
+Vue.component('button-counter', {
+  template: '<button v-on:click="increment">{{counter}}</button>',
+  data: function() {
     return {
-      counter:0
+      counter: 0
     }
   },
-  methods:{
-    increment:function(){
-      this.counter += 1 ;
+  methods: {
+    increment: function() {
+      this.counter += 1;
       this.$emit('increment');
     }
   }
 })
 new Vue({
-  el:'#counter-event-example',
-  data:{
-    total:0
+  el: '#counter-event-example',
+  data: {
+    total: 0
   },
-  methods:{
-    incrementTotal:function(){
+  methods: {
+    incrementTotal: function() {
       this.total += 1;
     }
   }
@@ -161,29 +163,32 @@ new Vue({
 
 
 //内容风发
-Vue.component('slot-demo',{
-  template:"<div><h2>我是子组件的标题</h2><slot>只有在没有要分发的内容时才会显示。</slot></div>",
-  data:{
+Vue.component('slot-demo', {
+  template: "<div><h2>我是子组件的标题</h2><slot>只有在没有要分发的内容时才会显示。</slot></div>",
+  data: function() {
+    return {
 
+    }
   }
 })
 
 new Vue({
-  el:'#slot'
+  el: '#slot'
 })
 
-function run(fn){
-  var gen = fn();
-  function next(err, data) {
-    var result = gen.next(data);
-    if (result.done) return;
-    result.value(next);
+//props
+Vue.component('props-demo', {
+  template: "<div><div>我是子组件,我这里的数据来自父组件的信息：“{{pra}}”</div><span>{{asas}}</span></div>",
+  props: ['pra'],
+  data: function() {
+    return {
+        asas:this.pra
+    }
   }
-  next();
-}
-
-var g = function* (){
-  var f1 = yield function(){console.log(1)};
-  var f2 = yield function(){console.log(2)};
-  var f3 = yield function(){console.log(3)};
-};
+})
+new Vue({
+  el:"#props",
+  data:{
+    
+  }
+})

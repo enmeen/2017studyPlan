@@ -83,7 +83,7 @@ function downImg(imgurl) {
 							if (urls.length > 0) {
 								downImg(urls.shift());
 								downCount++;
-								console.log("剩余图片数量....");
+								
 							}
 						}
 					});

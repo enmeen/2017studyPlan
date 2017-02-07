@@ -1,15 +1,17 @@
 {
   "name": "ps",
   "version": "1.0.0",
-  "description": "",
+  "description": "爬虫",
   "main": "app.js",
   "dependencies": {
     "cheerio": "^0.22.0"
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "catch":"node getHouse.js",
+    "pic":"node app.js"
   },
-  "author": "",
+  "author": "desen",
   "license": "ISC"
 }

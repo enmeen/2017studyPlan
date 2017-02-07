@@ -25,7 +25,7 @@ function getHtml(option) {
 	let _href = href[0] + search + href[1];
 
 	let pageDate = ''; //存储服务器返回数据
-	
+
 
 	http.get(_href, function(res) { //GET请求便捷方法
 		res.setEncoding('utf8');
@@ -63,7 +63,6 @@ function getHtml(option) {
 				}
 			}
 
-			
 			for (let i = 0; i < item.length; i++) {
 				let titleAtt = titleHtml[i].attribs;
 				/*
@@ -75,22 +74,22 @@ function getHtml(option) {
 						area:4
 					}					
 								 */
-				outContextArr.push({ //
-						title: titleAtt.title,
-						price: priceHtml[i].children[0].data,
-						href: titleAtt.href,
-						area: area[i]
-					})
+				outContextArr.push({ 
+					title: titleAtt.title,
+					price: priceHtml[i].children[0].data,
+					href: titleAtt.href,
+					area: area[i]
+				})
 			}
 			outContextArr = unique(outContextArr, 'title');
 
-			for(let k = 0;k < outContextArr.length; k++){
+			for (let k = 0; k < outContextArr.length; k++) {
 				let _data = outContextArr[k];
-				
+
 				title = '- [' + _data.title + '](' + _data.href + ')';
-				price = '——'+_data.price +'万';
+				price = '——' + _data.price + '万';
 				area = '——' + _data.area;
-				outContext += title + price+ area + '\r\n';
+				outContext += title + price + area + '\r\n';
 			}
 			writeFs(outContext, isFirst);
 			//判断循环是否结束
@@ -102,14 +101,13 @@ function getHtml(option) {
 			}
 		})
 	})
-
 }
 
 //将内容写入到文件当中，格式为md
 function writeFs(content, state) {
 	let site = './house/demo.md';
 	if (state) {
-		fs.writeFile(site, content, function(err) {//没有则创建文件。
+		fs.writeFile(site, content, function(err) { //没有则创建文件。
 			console.log('创建文件成功');
 			isFirst = false;
 		})
@@ -118,7 +116,6 @@ function writeFs(content, state) {
 
 		});
 	}
-
 }
 /**
  * 对象数组去重
@@ -134,7 +131,6 @@ function unique(objArr, key) {
 		if (n.indexOf(objArr[i][key]) == -1) {
 			n.push(objArr[i][key]);
 			out.push(objArr[i]);
-
 		}
 	}
 	return out;

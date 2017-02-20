@@ -16,7 +16,7 @@ let isFirst = true; //保证每次运行都能重写重写文档。
  *  	pageMax:10
  *  }
  */
-function getHtml(option) {
+function getHtml(option,hasUrl) {
 	//设置配置项
 	let pageMax = option.pageMax || 10;
 	let href = option.href;
@@ -85,8 +85,12 @@ function getHtml(option) {
 
 			for (let k = 0; k < outContextArr.length; k++) {
 				let _data = outContextArr[k];
-
-				title = '- [' + _data.title + '](' + _data.href + ')';
+				if(hasUrl){
+					title = '- [' + _data.title + '](' + _data.href + ')';
+				}else{
+					title = '- ' + _data.title;
+				}
+				
 				price = '——' + _data.price + '万';
 				area = '——' + _data.area;
 				outContext += title + price + area + '\r\n';
@@ -145,4 +149,4 @@ let option = {
 	pageMax: 10
 }
 let outTitle = '##安居客，70-90平方, 按时间最新排序,已过滤重复信息 \r\n'; //存储输出的文本。
-getHtml(option);
+getHtml(option,false);

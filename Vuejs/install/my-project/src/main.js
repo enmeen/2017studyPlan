@@ -1,7 +1,7 @@
 import Vue from 'vue'
-import App from './App.vue'
-import Test from './test.vue';
-import Demo from './demo.vue';
+import App from './commonet/App.vue'
+import Test from './commonet/test.vue';
+import Demo from './commonet/demo.vue';
 /*new Vue({
   el: '#app',
   render: h => h(App)

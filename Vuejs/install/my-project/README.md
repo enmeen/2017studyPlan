@@ -16,3 +16,6 @@ npm run build
 ```
 
 For detailed explanation on how things work, consult the [docs for vue-loader](http://vuejs.github.io/vue-loader).
+
+## note
+这是一个简单的待办项记事本。通过localStorge实现缓存功能。

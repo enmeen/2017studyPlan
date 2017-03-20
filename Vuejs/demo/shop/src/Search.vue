@@ -28,7 +28,7 @@ export default {
     }
   },
   
-  methods:{
+  methods:{w
       searchMethod:function(value){// value 为未过滤值， searchstring为输入的文字
         this.searchString = this.searchString.toLowerCase();
         //array过滤方法

@@ -12,12 +12,12 @@ import Form from './Form.vue'
 new Vue({
   el: '#nav',
   render: h => h(Nav)
-})
+});
 
 new Vue({
   el: '#edit',
   render: h => h(Edit)
-})
+});
 
 new Vue({
   el: '#form',

@@ -3,7 +3,7 @@ import App from './App.vue'
 import Nav from './Nav.vue'
 import Edit from './Edit.vue'
 import Form from './Form.vue'
-
+import Search from './Search.vue'
 /*new Vue({
   el: '#app',
   render: h => h(App)
@@ -22,4 +22,9 @@ new Vue({
 new Vue({
   el: '#form',
   render: h => h(Form)
+})
+
+new Vue({
+    el: '#search',
+    render: h => h(Search)
 })

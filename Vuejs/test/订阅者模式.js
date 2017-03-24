@@ -8,7 +8,7 @@ var pub = {
 var sub1 = {update:function(){console.log(1)}};
 var sub2 = {update:function(){console.log(2)}};
 var sub3 = {update:function(){console.log(3)}};
-//一个主题对象
+//一个主题对象:调度作用，负责订阅者的添加和删除
 function Dep(){
 	this.subs = [sub1,sub2,sub3];
 }

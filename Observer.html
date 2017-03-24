@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>观察者模式</title>
+</head>
+<body>
+<div id="time"></div>
+<button id="addobserver">add new observer checkbox</button>
+<input type="checkbox" id="maincheckbox" label="maincheckbox" title="maincheckbox"/>
+<div id="observerContainer"></div>
+<script>
+    /*
+     * Observer模式
+     * 具体观察者和具体目标继承各自的基类，然后具体观察者把自己注册到具体目标里，在具体目标发生变化时候，调度观察者的更新方法。
+     * */
+    //观察者
+    function Watch() {
+        this.update();
+    }
+    Watch.prototype = {
+        update: function () {
+
+        }
+    };
+    //目标
+    function Goal() {
+        this.subs = [];
+    }
+    Goal.prototype = {
+        add: function (obj) {
+            this.subs.push(obj)
+        },
+        notify: function () {
+            this.subs.forEach(function (item) {
+                item.update();
+            })
+        }
+    };
+
+    //具体观察者
+    function Timewatch() {
+        this.dom = document.getElementById('time');
+        this.index = 0;
+        this.update();
+    }
+    Timewatch.prototype = {
+        update: function () {
+            this.dom.innerText = this.index++;
+        }
+    };
+    //具体目标
+    function getTime() {
+        var goal = new Goal();
+        var timewatch = new Timewatch();
+        goal.add(timewatch);
+
+        setInterval(function () {
+            goal.notify();
+        }, 1000)
+    }
+
+    getTime();
+
+</script>
+
+<script>
+
+    /*
+     * ObserverList 严格来讲应该是属于目标对象，目标对象用来管理挂在其上的观察者的工具函数。
+     * 其实可以内置在目标对象中
+     * */
+    function ObserverList() {
+        this.observerList = [];
+    }
+    ObserverList.prototype = {
+        constructor: ObserverList,
+        add: function (obj) {//添加
+            return this.observerList.push(obj);
+        },
+        empty: function () {//清空
+            this.observerList = [];
+        },
+        count: function () {//获取绑定数量
+            return this.observerList.length;
+        },
+        get: function (index) {//获取某个位置数量
+            if (-1 < index < this.observerList.length)
+                return this.observerList[index]
+        },
+        insert: function (obj, index) {//插入到某个位置
+            var pointer = -1;
+            if (index === 0) {
+                this.observerList.unshift(obj);
+                pointer = index;
+            } else if (index === this.observerList.length) {
+                this.observerList.push(obj);
+                pointer = index;
+            }
+            return pointer;
+        },
+        indexof: function (obj, startIndex) {//查找数据是否在observerList中
+            var i = startIndex, pointer = -1;
+            while (i < this.observerList.length) {
+                if (this.observerList[i] === obj) {
+                    pointer = i;
+                }
+                i++;
+            }
+            return pointer;
+        },
+        removeIndexAt: function (index) {//删除首或尾的数据
+            if (index === 0) {
+                this.observerList.shift();
+            } else if (index === this.observerList.length - 1) {
+                this.observerList.pop();
+            }
+        }
+    }
+    /*
+     * 目标对象
+     * */
+    function Subject() {
+        this.observers = new ObserverList();
+    }
+    Subject.prototype = {
+        constructor: Subject,
+        addObserver: function (observer) {
+            this.observers.add(observer);
+        },
+        removeObserver: function (observer) {
+            this.observers.removeIndexAt(this.observers.indexof(observer, 0))
+        },
+        notify: function (context) {//调用每个数组元素中的update方法
+            var observerCount = this.observers.count();
+            for (var i = 0; i < observerCount; i++) {
+                this.observers.get(i).update(context)
+            }
+        }
+    };
+    /*
+     * 观察者
+     * */
+    function Observer() {
+        this.update = function () {
+            //...code
+        }
+    }
+
+    //伪继承
+    function extend(obj, extension) {
+        for (var key in obj) {
+            extension[key] = obj[key]
+        }
+    }
+
+    /*
+     * 实例展示:全选按钮的实现
+     * */
+    var controlCheckbox = document.getElementById('maincheckbox'),
+        addBtn = document.getElementById('addobserver'),
+        container = document.getElementById('observerContainer');
+    // 继承目标
+    extend(new Subject(), controlCheckbox);
+    controlCheckbox['onclick'] = new Function("controlCheckbox.notify(controlCheckbox.checked)");
+    addBtn.onclick = addNewObserver;
+    function addNewObserver() {
+        var check = document.createElement('input');
+        check.type = "checkbox";
+        //继承观察者
+        extend(new Observer(), check);
+        check.update = function (value) {
+            this.checked = value;
+        };
+        controlCheckbox.addObserver(check);
+        container.appendChild(check);
+    }
+
+</script>
+</body>
+</html>

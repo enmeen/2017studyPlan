@@ -160,14 +160,15 @@
     var controlCheckbox = document.getElementById('maincheckbox'),
         addBtn = document.getElementById('addobserver'),
         container = document.getElementById('observerContainer');
-    // 继承目标
+    // 继承目标=>具体目标
     extend(new Subject(), controlCheckbox);
+    //触发点击事件，改变状态，在它上面会挂载具体观察者
     controlCheckbox['onclick'] = new Function("controlCheckbox.notify(controlCheckbox.checked)");
     addBtn.onclick = addNewObserver;
     function addNewObserver() {
         var check = document.createElement('input');
         check.type = "checkbox";
-        //继承观察者
+        //继承观察者=>具体观察者
         extend(new Observer(), check);
         check.update = function (value) {
             this.checked = value;

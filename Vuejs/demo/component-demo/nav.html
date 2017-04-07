@@ -9,10 +9,12 @@
             margin: 0;
             padding: 0;
         }
+
         body {
             width: 750px;
             margin: 0 auto;
         }
+
         nav {
             width: 100%;
             height: 80px;
@@ -21,6 +23,7 @@
             border-bottom: 1px solid #999;
             line-height: 80px;
         }
+
         .link {
             float: right;
             width: 200px;
@@ -28,16 +31,19 @@
             margin-right: 35px;
             text-align: right;
         }
+
         .icon {
             width: 25px;
             height: 25px;
         }
+
         .list {
             width: 100%;
             padding: 0 17px;
             box-sizing: border-box;
             clear: both;
         }
+
         .alist {
             float: left;
             width: 350px;
@@ -48,9 +54,27 @@
             background-color: #F2F3F4;
             margin-bottom: 15px;
             font-size: 28px;
+            cursor: pointer;
         }
+
         .alist:nth-child(2n) {
             margin-left: 16px;
+        }
+
+        .swiper {
+            width: 100%;
+            height: 340px;
+            overflow-x: auto;
+            clear: both;
+        }
+
+        .goods {
+            float: left;
+            width: 180px;
+            height: 100%;
+            margin-left: 17px;
+            background: #fff;
+            overflow: hidden;
         }
     </style>
 </head>
@@ -59,12 +83,13 @@
     <nav-child></nav-child>
     <div class="list">
         <!-- 然而他不能自动传递数据到组件里，因为组件有自己独立的作用域。为了传递迭代数据到组件里，我们要用 props v-bind -->
-        <list-child v-for="todo in todos" :title="todo.title"></list-child>
+        <list-child v-for="todo in todos" :title="todo.title" @click.native="layer"></list-child>
+    </div>
+    <div class="swiper">
+        <swiper-goods v-for="good in goods" :priceTitle="good.title" :price="good.item_h5_url"></swiper-goods>
     </div>
 </div>
 <script src="vue.js"></script>
-<!-- vuejs官方的ajax库 -->
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
 <script>
     var nav = {
@@ -83,10 +108,19 @@
             }
         }
     };
-
     var list = {
         template: '<a class="alist">{{title}}</a>',
         props: ['title'],
+        data: function () {
+            return {}
+        }
+    };
+    var swiperGoods = {
+        template: '<a class="goods">' +
+        '<div class="image-box"><img :src="imgsrc" alt=""></div>' +
+        '<div class="price-box"><h2 class="price-box-title">{{priceTitle}}</h2><strong class="price-box-price"><i class="yen">¥</i>{{price}}</strong> </div>' +
+        '</a>',
+        props: ['imgsrc','priceTitle','price'],
         data: function () {
             return {}
         }
@@ -95,29 +129,51 @@
         el: '.box',
         components: {
             'nav-child': nav,
-            'list-child': list
+            'list-child': list,
+            'swiper-goods': swiperGoods
         },
         data: function () {//这里的data对应的是 .nav中的所有子元素
             return {
-                getData:'',
-                todos: this.getData
+                todos: [],
+                goods:[]
             }
         },
-        mounted:function () {
+        methods: {
+            layer: function () {
+                alert('绑定在子组件上的事件')
+            }
+        },
+        created: function () {
+            var self = this;
             $.ajax({
                 url: '//mce.mogujie.com/jsonp/get/3',
                 data: {
                     pid: 42163,
                     page: 1,
-                    pageSize: 20
+                    pageSize: 6
                 },
                 dataType: 'jsonp'
             }).then(function (data) {
-                this.getData = data;
-                console.log(data)
-            })
+                self.todos = self.todos.concat(data.data.list);//知识点 数组的更新检测
+                console.log(self.todos)
+            });
+            //swiper-goods
+            $.ajax({
+                url: '//mce.mogucdn.com/jsonp/get/3',
+                data: {
+                    pid: 42751
+                },
+                dataType: 'jsonp'
+            }).then(function (data) {
+                console.log(data.data.list);
+                self.goods = self.todos.concat(data.data.list);
+
+            });
+
         }
-    })
+    });
+
+
 </script>
 </body>
 </html>

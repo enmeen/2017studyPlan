@@ -596,7 +596,11 @@ data: function () {
 </div>
 ```
 
+### vue实战
 
+- 正常的情况在一个单个组件内部自己使用v-on的事件，都不会有问题，如果。在一个组件上定义一个指令事件，必须要用.native，这里大家一定要注意
+- Vue 不允许在已经创建的实例上动态添加新的**根级响应式属性**(root-level reactive property)。然而它可以使用 Vue.set(object, key, value) 方法将响应属性添加到嵌套的对象上：
+- [数组的更新更新检测](https://cn.vuejs.org/v2/guide/list.html#数组更新检测)
 
 
 

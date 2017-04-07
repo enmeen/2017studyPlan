@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <title>vuex</title>
+</head>
+<body>
+<div class="time" @click="add">{{count}}</div>
+<script src="vue.js"></script>
+<script src="vuex@2.2.1.js"></script>
+<script>
+    //创建一个Store仓库
+    var store = new Vuex.Store({
+        state: {
+            count: 0
+        },
+        mutations: {
+            update:function (state) {
+                state.count++
+            }
+        }
+    });
+    new Vue({
+        el:'.time',
+        computed: {
+            count:function () {
+                return store.state.count
+            }
+        },
+
+        methods:{
+            add:function () {
+                store.commit('update')
+            }
+        }
+    });
+
+
+
+</script>
+</body>
+</html>

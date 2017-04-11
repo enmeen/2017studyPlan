@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <title>Title</title>
+    <style>
+        .blog{
+            display: grid;
+            grid-template-columns: 400px 20px 180px;
+            grid-template-rows: 100px 20px 210px 20px 100px;
+        }
+        .header {
+            grid-row: 1 /2;
+            grid-column: 1 /4;
+        }
+        .content {
+            grid-row: 3 /4;
+            grid-column: 1 /2;
+        }
+        .sidebar {
+            grid-row: 3 /4;
+            grid-column: 3 /4;
+        }
+        .footer {
+            grid-row: 5 / 6;
+            grid-column: 1 / 4;
+        }
+    </style>
+</head>
+<body>
+<div class="blog">
+    <div class="header">Header</div>
+    <div class="content">Content</div>
+    <div class="sidebar">Sidebar</div>
+    <div class="footer">Footer</div>
+</div>
+</body>
+</html>

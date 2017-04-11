@@ -66,14 +66,21 @@
             height: 340px;
             overflow-x: auto;
             clear: both;
+            white-space: nowrap;
         }
 
         .goods {
-            float: left;
+            display: inline-block;
             width: 180px;
             height: 100%;
             margin-left: 17px;
             background: #fff;
+            overflow: hidden;
+        }
+        .image-box{
+            width: 100%;
+            height: 0;
+            padding-bottom: 133.33%;
             overflow: hidden;
         }
     </style>
@@ -86,7 +93,7 @@
         <list-child v-for="todo in todos" :title="todo.title" @click.native="layer"></list-child>
     </div>
     <div class="swiper">
-        <swiper-goods v-for="good in goods" :priceTitle="good.title" :price="good.item_h5_url"></swiper-goods>
+        <swiper-goods v-for="good in goods" :pricetitle="good.title" :price="good.price" :link="good.item_h5_url" :imgsrc="good.image"></swiper-goods>
     </div>
 </div>
 <script src="vue.js"></script>
@@ -116,11 +123,11 @@
         }
     };
     var swiperGoods = {
-        template: '<a class="goods">' +
+        template: '<a class="goods" :href="link">' +
         '<div class="image-box"><img :src="imgsrc" alt=""></div>' +
-        '<div class="price-box"><h2 class="price-box-title">{{priceTitle}}</h2><strong class="price-box-price"><i class="yen">¥</i>{{price}}</strong> </div>' +
+        '<div class="price-box"><h2 class="price-box-title">{{pricetitle}}</h2><strong class="price-box-price"><i class="yen">¥</i>{{price}}</strong> </div>' +
         '</a>',
-        props: ['imgsrc','priceTitle','price'],
+        props: ['imgsrc','pricetitle','price','link'],
         data: function () {
             return {}
         }
@@ -165,8 +172,9 @@
                 },
                 dataType: 'jsonp'
             }).then(function (data) {
-                console.log(data.data.list);
-                self.goods = self.todos.concat(data.data.list);
+
+                self.goods = self.goods.concat(data.data.list);
+                console.log(self.goods);
 
             });
 

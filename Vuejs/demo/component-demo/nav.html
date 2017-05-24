@@ -87,7 +87,7 @@
 </head>
 <body>
 <div class="box">
-    <nav-child></nav-child>
+    <na></na>
     <div class="list">
         <!-- 然而他不能自动传递数据到组件里，因为组件有自己独立的作用域。为了传递迭代数据到组件里，我们要用 props v-bind -->
         <list-child v-for="todo in todos" :title="todo.title" @click.native="layer"></list-child>
@@ -135,7 +135,7 @@
     new Vue({
         el: '.box',
         components: {
-            'nav-child': nav,
+            'Na': nav,
             'list-child': list,
             'swiper-goods': swiperGoods
         },

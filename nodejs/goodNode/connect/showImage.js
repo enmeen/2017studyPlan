@@ -12,7 +12,6 @@ fs.readdir(process.cwd() + '/images', function (err, files) {
         _imgHtml += '<img src="/images/'+ val +'">';
     });
     createWebServer(files,_imgHtml);
-    console.log('open on 3000 port')
 });
 
 function createWebServer(imgName,imgHtml) {
@@ -20,11 +19,10 @@ function createWebServer(imgName,imgHtml) {
         if(req.url == '/'){
             //第一次进入首页时 渲染html 再根据image中的link 来获取图片数据
             res.writeHead(200,{'Content-type':'text/html'});
-            res.end(imgHtml);
+            res.end(imgHtml);// 写入image html
         }else{
             imgName.forEach(function (val) {
                 if(req.url == '/images/' + val){
-                    console.log(val)
                     res.writeHead(200,{'Content-type':'image/png'});
                     var stream = fs.createReadStream(process.cwd() + '/images/' + val);
                     stream.on('data',function (data) {

@@ -6,11 +6,10 @@
 </template>
 <script>
 	export default{
-		name:'demo',
+	    props:['message'],
 		data(){
 			return {
-				message:'hello world',
-				
+
 			}
 		},
 		computed:{

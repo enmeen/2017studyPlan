@@ -21,25 +21,34 @@
                 </li>
             </ol>
         </div>
+        <demoh message="我来自自组件"></demoh>
+        <alink :mess="alinkObj"></alink>
     </div>
 </template>
 <script>
 
 import Store from '../lib/store.js';
 import Time from '../lib/time.js';
+import Demoh from './demo.vue';
+import Alink from './alink.vue';
 const VUE_PENDING = 'VUE_PENDING';
 const VUE_COMPLETE = 'VUE_COMPLETE';
-var PENDING = Store(VUE_PENDING);
-var COMPLETE = Store(VUE_COMPLETE);
+let PENDING = Store(VUE_PENDING);
+let COMPLETE = Store(VUE_COMPLETE);
 
 export default {
     name: 'test',
+    components:{
+        Demoh,
+        Alink
+    },
     data() {
         return {
             title: '代办事项',
             items: PENDING.fetch() || [],
             completeItem: COMPLETE.fetch() || [],
-            message: ''
+            message: '',
+            alinkObj:['www.baidu.com','www.mogujie.com']
         }
     },
     watch: {
@@ -64,8 +73,8 @@ export default {
         },
         drop: function(e) {
             e.preventDefault();
-            var data = e.dataTransfer.getData("Text");
-            console.log(data)
+            let data = e.dataTransfer.getData("Text");
+            console.log(e);
             e.target.appendChild(document.getElementById(data[0]));
 
         },

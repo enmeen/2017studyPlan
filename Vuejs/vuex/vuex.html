@@ -6,7 +6,10 @@
     <title>vuex</title>
 </head>
 <body>
-<div class="time" @click="add">{{count}}</div>
+<div class="box">
+    <div class="time" @click="add">{{count}}</div>
+    <tpl></tpl>
+</div>
 <script src="vue.js"></script>
 <script src="vuex@2.2.1.js"></script>
 <script>
@@ -16,26 +19,38 @@
             count: 0
         },
         mutations: {
-            update:function (state) {
+            update: function (state) {
                 state.count++
             }
         }
     });
-    new Vue({
-        el:'.time',
-        computed: {
+    // template
+    var tpl = {
+        template:`<div>{{count+1}}</div>`,
+        computed:{
             count:function () {
-                return store.state.count
+                return this.$store.state.count
+            }
+        }
+    }
+    new Vue({
+        el: '.box',
+        components:{
+            tpl:tpl
+        },
+        store:store,
+        computed: {
+            count: function () {
+                return this.$store.state.count
             }
         },
 
-        methods:{
-            add:function () {
+        methods: {
+            add: function () {
                 store.commit('update')
             }
         }
     });
-
 
 
 </script>

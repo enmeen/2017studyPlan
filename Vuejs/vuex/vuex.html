@@ -18,9 +18,16 @@
         state: {
             count: 0
         },
-        mutations: {
-            update: function (state) {
-                state.count++
+        mutations: { //需要同步
+            update: function (state,obj) {
+                state.count += obj.n
+            }
+        },
+        actions:{ // 事件分发
+            asynUpdate:function (context,obj) {
+                setTimeout(function () {
+                    context.commit('update',obj)
+                },500);
             }
         }
     });
@@ -47,9 +54,14 @@
 
         methods: {
             add: function () {
-                store.commit('update')
+                /*store.commit({
+                    type:"update",
+                    n:10
+                })*/
+                store.dispatch('asynUpdate',{n:2})
             }
-        }
+        },
+
     });
 
 

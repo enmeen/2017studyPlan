@@ -20,7 +20,13 @@ const getters = {
         return state.activeNote
     },
     getFav: state => {
-        return state.notes.filter(element => element.favorite);
+        // filter 为非变异方法。
+        return state.notes.filter((element,index) => {
+            if(element.favorite){
+                //element.index = index;
+                return element
+            }
+        });
     }
 };
 //要实现的 mutation 方法包括： 增删改查
@@ -39,12 +45,20 @@ const mutations = {
     },
 
     DELETE_NOTE (state) { // 删除
-        state.notes.splice(state.activeNote,1);
-        state.activeNote = state.notes[0]
+        let notes = state.notes;
+        let len = notes.length - 1;
+        for(let i = 0; i < len;i++){
+           if(notes[i] === state.activeNote){
+               state.notes.splice(i,1);
+               state.activeNote = state.notes[0];
+           }
+        }
+
+
     },
 
     TOGGLE_FAVORITE (state) { // 添加收藏
-        state.activeNote.favorite = !state.activeNote.favorite
+        state.activeNote.favorite = !state.activeNote.favorite;
     },
 
     SET_ACTIVE_NOTE (state, note) {

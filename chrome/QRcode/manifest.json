@@ -1,0 +1,27 @@
+{   //这里必须是2
+  "manifest_version": 2,
+  //扩展名称
+  "name": "QRcode tool",
+  //扩展版本
+  "version": "1.0",
+  //扩展描述
+  "description": "一个简洁的二维码生成工具，简单实用，小巧玲珑。",
+  //扩展图标(在扩展中心显示)
+  "icons": {
+    "16": "images/icon.ico",
+    "48": "images/icon.ico",
+    "128": "images/icon.ico"
+  },
+  //配置页面
+  "options_page": "options.html",//配置项页面,右击 =》 选项
+  //扩展图标配置
+  "browser_action": {
+    "default_popup": "popup.html",
+    "default_titlec": "QRcode tool",
+    "default_icon": {
+      "16": "images/icon.ico"
+    }
+  },
+  //权限声明
+  "permissions":["tabs"]
+}

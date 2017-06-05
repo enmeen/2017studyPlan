@@ -14,7 +14,7 @@ NotesList组件，且拥有以下功能：
             </div>
         </div>
         <div class="list">
-            <article v-for="(item,index) in filterList" @click="checkNote(item)" :data-index="index">{{item}}</article>
+            <article v-for="(item,index) in filterList" @click="checkNote(item,index)">{{item}}</article>
         </div>
     </div>
 </template>
@@ -25,28 +25,27 @@ NotesList组件，且拥有以下功能：
         name: 'list',
         data () {
             return {
-                showAll:true
+                showAll: true
             }
         },
-        computed:{
+        computed: {
             filterList(){
-                if(this.showAll === true){
+                if (this.showAll === true) {
                     return this.$store.getters.getAllNotes
-                }else{
+                } else {
                     return this.$store.getters.getFav
                 }
             }
         },
-        methods:{
+        methods: {
             FavBtn(){
                 this.showAll = false;
             },
             AllBtn(){
                 this.showAll = true;
             },
-            checkNote(item,e){
-                console.log(e);
-                this.$store.dispatch('updateActiveNote',item);
+            checkNote(item){
+                this.$store.dispatch('updateActiveNote', item);
             }
         }
     }

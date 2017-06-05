@@ -17,3 +17,8 @@
 // 这样写不会对{{getAct.text}}实时响应
 <textarea @input="editNote($event)">{{getAct.text}}</textarea>
 ```
+- 关于删除功能的实现。
+    - 原计划是用 文章中的 $remove来实现不过vuex新版本已经不支持了
+    - 后来考虑使用数组的index来进行定位。不过在Fav的列表中不是很方便
+    - 由于删除的item属于notes中的元素，所以最后通过判定item在notes中的位置来实现，缺点是每次删除都要循环一遍
+    - [地址](https://laracasts.com/discuss/channels/vue/removing-an-item-from-vue-js-data)

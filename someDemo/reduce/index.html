@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    var fn = [1,2,3,4,5,6,7,8,9];
+    fn.reduce(function (p,v) {
+        console.log(p,v)
+        return p+v
+    });
+
+    var fn = function () {
+        var a = 1;
+        return (a++,a)
+    }
+
+    const get = (p, o) => p.reduce((xs, x) => (xs && xs[x]) ? xs[x] : null, o);
+    console.log(get(['user', 'posts', 0, 'comments'], props));
+
+    function get(p,o) {
+        p.reduce(function (xp,x) {
+            if(xp&&xp[x]){
+                return xp[x]
+            }else{
+                return null
+            }
+        },o)
+    }
+</script>
+</body>
+</html>

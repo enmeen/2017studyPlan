@@ -4,29 +4,48 @@
   //扩展名称
   "name": "测试插件",
   //扩展版本
-  "version": "1.0",
+  "version": "0.0.1",
   //扩展描述
   "description": "测试chrome插件",
   //扩展图标(在扩展中心显示)
   "icons": {
-    "16": "images/icon.ico",
-    "48": "images/icon.ico",
-    "128": "images/icon.ico"
+    "16": "images/icon.png",
+    "48": "images/icon.png",
+    "128": "images/icon.png"
   },
   //配置页面
-  "options_page": "options.html",
+  //"options_page": "options.html",
   //配置项页面,右击 =》 选项
   //扩展图标配置
   "browser_action": {
-    "default_popup": "index.html",
-    "default_titlec": "QRcode tool",
+    "default_popup": "popup.html",
+    "default_titlec": "测试",
     "default_icon": {
-      "16": "images/icon.ico"
+      "16": "images/icon.png"
     }
   },
+  "background": {
+    "scripts": [
+      "js/eventPage.js"
+    ],
+    "persistent": false
+  },
+  "content_scripts": [
+    {
+      //Content scripts are JavaScript files that run in the context of web pages.
+      "matches": [
+        "http://*.mogujie.com/*",
+        "https://*.mogujie.com/*"
+      ],
+      "js": [
+        "js/jquery-3.2.1.min.js",
+        "js/contentBetter.js"
+      ]
+    }
+  ],
   //权限声明
   "permissions": [
     "tabs",
-    "pageCapture"
+    "http://*/"
   ]
 }

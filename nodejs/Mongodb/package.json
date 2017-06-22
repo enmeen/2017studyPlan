@@ -1,0 +1,10 @@
+{
+  "name": "user-autor",
+  "version": "0.0.1",
+  "dependencies": {
+    "express": "2.5.8",
+    "mongodb": "0.9.9",
+    "jade": "0.20.3"
+  }
+  
+}

@@ -1,0 +1,17 @@
+extends layout
+block body
+    form(action='/login',method='POST')
+        fieldset
+            legend Log in
+            if(signupEmail)
+                p Congratulations on sign up!Please login below.
+            p
+                label Email
+                input(name='user[email]',type='text',value=signupEmail)
+            p
+                label Passworld
+                input(name='user[passworld]',type='text')
+            p
+                button Submit
+            p
+                a(href='/') Go back

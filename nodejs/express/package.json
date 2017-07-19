@@ -1,0 +1,15 @@
+{
+  "name": "express",
+  "version": "0.0.1",
+  "description": "express学习",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "desen",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.15.3",
+    "jade": "^1.11.0"
+  }
+}

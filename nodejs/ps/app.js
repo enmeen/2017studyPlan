@@ -33,7 +33,7 @@ function getHtml(href, serach) {
 			for(var i = 0; i < html.length; i++) {
 				var src = html[i].attribs.src;
 				// 筛选部分广告，不是真的段子
-				if (src.indexOf("http://image.haha.mx") > -1) {
+				if (src.indexOf("//image.haha.mx") > -1) {
 					urls.push(html[i].attribs.src)
 				}
 			}
@@ -57,12 +57,16 @@ function getHtml(href, serach) {
  * @param {String} imgurl：图片地址
  */
 function downImg(imgurl) {
-	var narr = imgurl.replace("http://image.haha.mx/", "").split("/")
+	console.log(imgurl);
+	var narr = imgurl.replace("//image.haha.mx/", "").split("/");
+
 	// 做一步优化，如果存在文件，则不下载
 	var filename = "./upload/topic1/" + narr[0]  + narr[1] + narr[2] + "_" + narr[4];
 	fs.exists(filename, function(b){
 		if (!b) {
 			// 文件不存则进行 下载
+			imgurl = 'http:' + imgurl;
+			console.log(imgurl)
 			http.get(imgurl.replace("/small/", "/big/"), function(res) {
 				
 				var imgData = "";
@@ -75,9 +79,10 @@ function downImg(imgurl) {
 				
 				res.on("end", function() {
 					var savePath = "./pic/" + narr[0]  + narr[1] + narr[2] + "_" + narr[4];
+					console.log(savePath);
 					fs.writeFile(savePath, imgData, "binary", function(err) {
 						if(err) {
-							console.log(err);
+							console.log('你可能需要创建一个pic的文件夹');
 						}  else {
 							console.log(narr[0]  + narr[1] + narr[2] + "_" + narr[4]);
 							if (urls.length > 0) {
@@ -107,7 +112,7 @@ function downImg(imgurl) {
 }
 
 var pagemax = 5;		// 获取到多少页的内容
-var startindex = 0;		// 从多少页开始获取
+var startindex = 6;		// 从多少页开始获取
 
 function start(){
 	console.log("开始获取图片连接");

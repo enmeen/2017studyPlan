@@ -12,6 +12,7 @@ var sub3 = {update:function(){console.log(3)}};
 function Dep(){
 	this.subs = [sub1,sub2,sub3];
 }
+// setter
 Dep.prototype.notify = function(){
 	this.subs.forEach(function(sub){
 		sub.update();
